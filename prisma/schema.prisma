@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PanicRecord {
+  uid String @id @default(cuid())
+  date DateTime @db.Date 
+  time_begain DateTime @db.Time(0) 
+  triggers String
+  expected Boolean 
+  max_fear Int
+  chest_pain Boolean
+  sweating Boolean
+  heart_pounding Boolean
+  nausea Boolean
+  short_breath Boolean
+  dizzy Boolean
+  shaking Boolean
+  chills_flushes Boolean
+  numbness Boolean
+  unreality Boolean
+  choking Boolean
+  dying Boolean
+  losing_control Boolean
+  thoughts String
+  behaviors String
+}
+
+model DailyRecord {
+  uid String @id @default(cuid())
+  date DateTime @unique @db.Date
+  anxiety_level Int @default(0)
+  depression_level Int @default(0)
+  worry_level Int @default(0)
+}
