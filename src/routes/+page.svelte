@@ -45,7 +45,16 @@
 		on:click={() => (showDaily = !showDaily)}>Show form</button
 	>
 {/if}
+<h2 class="text-xl mt-4">Panic Attack Reporting</h2>
+
 <h3 class="text-lg">Past records</h3>
 {#each data.daily as record}
 	<DailyCard {record} />
 {/each}
+
+<form method="POST" action="?/logout">
+	<button
+		class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
+		>Logout</button
+	>
+</form>

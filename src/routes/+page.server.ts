@@ -1,4 +1,5 @@
 import { prisma } from '$lib/server/prisma';
+import { redirect } from '@sveltejs/kit';
 
 import type { PageServerLoad } from './$types';
 import type { Actions } from './$types';
@@ -43,5 +44,9 @@ export const actions: Actions = {
 			});
 		}
 		return;
-	}
+	},
+  logout: async ({ cookies }) => {
+    cookies.delete('session');
+    throw redirect(301, '/authorize')
+  }
 };
