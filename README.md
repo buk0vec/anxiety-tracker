@@ -1,38 +1,28 @@
-# create-svelte
+# Anxiety Tracker
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Why?
 
-## Creating a project
+Because I have anxiety and I sometimes have panic attacks. The goal of this web application is to provide objective daily anxiety and panic attack reporting as described in [Mastery of Your Anxiety and Panic](https://www.amazon.com/Mastery-Your-Anxiety-Panic-Treatments/dp/0195311353).
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Features
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Daily reporting of anxiety, depression, and worry levels
+- Basic password-protection of the website and API routes
+- Saves information in a Postgres database
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Todo
 
-## Developing
+- Panic attack reporting
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Technology Used
 
-```bash
-npm run dev
+This project uses SvelteKit and Prisma. 
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Setup
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+1. `git clone https://github.com/buk0vec/anxiety-tracker.git`
+2. `cd anxiety-tracker`
+3. `yarn install`
+4. Create a .env file and add a Postgres connection string to `DATABASE_URL` and a site password to `PRIVATE_SITE_PASSWORD`
+5. Run `npx prisma db push` to push the Prisma schema to your database
+6. `yarn dev` to start the development server!
