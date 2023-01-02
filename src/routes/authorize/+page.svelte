@@ -4,6 +4,10 @@
 	export let form: ActionData;
 </script>
 
+<svelte:head>
+	<title>Authorize - Anxiety Tracker</title>
+</svelte:head>
+
 <h1 class="text-2xl">Please enter the password to access Anxiety Tracker:</h1>
 <form method="POST" class="flex flex-col">
 	<input type="text" autocomplete="username" id="username" name="username" hidden />

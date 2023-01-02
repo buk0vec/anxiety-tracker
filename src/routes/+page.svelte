@@ -16,6 +16,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Anxiety Tracker</title>
+</svelte:head>
+
 <h1 class="text-3xl">Anxiety Record</h1>
 
 <h2 class="text-xl mt-4">Daily Check-In</h2>
