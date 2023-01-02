@@ -1,4 +1,4 @@
-import { PRIVATE_SITE_PASSWORD } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import type { Handle } from '@sveltejs/kit';
 import * as bcrypt from 'bcrypt';
 
@@ -12,7 +12,7 @@ export const handle = (async ({ event, resolve }) => {
   else {
     const session = await event.cookies.get('session');
     if (session) {
-      const valid = await bcrypt.compare(PRIVATE_SITE_PASSWORD, session)
+      const valid = await bcrypt.compare(env.PRIVATE_SITE_PASSWORD, session)
       if (valid) {
         const response = await resolve(event);
         return response;
