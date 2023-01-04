@@ -8,7 +8,7 @@ export const load = (async () => {
 	return {
 		panic: await prisma.panicRecord.findMany(),
 		daily: await prisma.dailyRecord.findMany(),
-    now: new Date()
+		now: new Date()
 	};
 }) satisfies PageServerLoad;
 
@@ -28,7 +28,7 @@ export const actions: Actions = {
 		if (query) {
 			await prisma.dailyRecord.update({
 				where: { date: new Date(date) },
-				data: { 
+				data: {
 					anxiety_level: anxiety,
 					depression_level: depression,
 					worry_level: worry
@@ -46,8 +46,45 @@ export const actions: Actions = {
 		}
 		return;
 	},
-  logout: async ({ cookies }) => {
-    cookies.delete('session');
-    throw redirect(301, '/authorize')
-  }
+	createPanic: async ({ request }) => {
+		const fd = await request.formData();
+		const date = fd.get('date') as string;
+		const time = fd.get('time') as string;
+		const triggers = fd.get('triggers') as string;
+		const expected = (fd.get('expected') as string) === 'expected';
+		const max_fear = parseInt(fd.get('max_fear') as string);
+		const symptoms = fd.getAll('symptoms') as string[];
+		const thoughts = fd.get('thoughts') as string;
+		const behaviors = fd.get('behaviors') as string;
+		await prisma.panicRecord.create({
+			data: {
+				date: new Date(date),
+				time,
+				triggers,
+				expected,
+				max_fear,
+				thoughts,
+				behaviors,
+				chest_pain: symptoms.includes('chest_pain'),
+				sweating: symptoms.includes('sweating'),
+				heart_pounding: symptoms.includes('heart_pounding'),
+				nausea: symptoms.includes('nausea'),
+				short_breath: symptoms.includes('short_breath'),
+				dizzy: symptoms.includes('dizzy'),
+				shaking: symptoms.includes('shaking'),
+				chills_flushes: symptoms.includes('chills_flushes'),
+				numbness: symptoms.includes('numbness'),
+				unreality: symptoms.includes('unreality'),
+				choking: symptoms.includes('choking'),
+				dying: symptoms.includes('dying'),
+				losing_control: symptoms.includes('losing_control')
+			}
+		});
+
+		return;
+	},
+	logout: async ({ cookies }) => {
+		cookies.delete('session');
+		throw redirect(301, '/authorize');
+	}
 };
