@@ -7,7 +7,8 @@ import type { Actions } from './$types';
 export const load = (async () => {
 	return {
 		panic: await prisma.panicRecord.findMany(),
-		daily: await prisma.dailyRecord.findMany()
+		daily: await prisma.dailyRecord.findMany(),
+    now: new Date()
 	};
 }) satisfies PageServerLoad;
 
