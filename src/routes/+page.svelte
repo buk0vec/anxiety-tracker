@@ -4,7 +4,9 @@
 
 	export let data: PageData;
 
-	let showDaily = !data.daily.find(
+	let showDaily = false;
+
+	$: showDaily = !data.daily.find(
 		(r) =>
 			data.now.getDate() === r.date.getUTCDate() &&
 			data.now.getMonth() === r.date.getUTCMonth() &&
