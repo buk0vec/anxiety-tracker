@@ -9,7 +9,9 @@
 </script>
 
 <div
-	class="bg-slate-200 rounded p-4 my-2 hover:outline transition-outline cursor-pointer"
+	class={`bg-slate-200 rounded p-4 my-2 hover:shadow-md transition-shadow cursor-pointer ${
+		show ? 'shadow-md' : ''
+	}`}
 	on:click|self={() => (show = !show)}
 	on:keypress|self={() => (show = !show)}
 >
