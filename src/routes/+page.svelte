@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DailyCard from '$lib/DailyCard.svelte';
+	import PanicCard from '$lib/PanicCard.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -187,6 +188,10 @@
 		>
 	</form>
 {/if}
+<h3 class="text-lg">Past panic attacks</h3>
+{#each [...data.panic].sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
+	<PanicCard {record} />
+{/each}
 <h3 class="text-lg">Past check-ins</h3>
 {#each [...data.daily].sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
 	<DailyCard {record} />
