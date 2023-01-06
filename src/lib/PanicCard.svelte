@@ -93,6 +93,13 @@
 			<p class="inline">Thoughts: <span class="font-semibold">{record.thoughts}</span></p>
 			<br />
 			<p class="inline">Behaviors: <span class="font-semibold">{record.behaviors}</span></p>
+			<form method="POST" action="?/deletePanic">
+				<input type="hidden" id={`panic_${record.uid}_hidden`} name="uid" value={record.uid} />
+				<button
+					class="bg-slate-200 rounded my-4 p-2 border-solid border-2 border-red-500 hover:bg-red-500 text-black tranition-colors"
+					>Remove record</button
+				>
+			</form>
 		</div>
 	{/if}
 	<noscript>

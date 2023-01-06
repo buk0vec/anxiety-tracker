@@ -83,6 +83,17 @@ export const actions: Actions = {
 
 		return;
 	},
+  deletePanic: async ({ request }) => {
+    const fd = await request.formData();
+    // TODO: validate that this field exists.
+    const uid = fd.get('uid') as string;
+    await prisma.panicRecord.delete({
+      where: {
+        uid
+      }
+    })
+    return;
+  },
 	logout: async ({ cookies }) => {
 		cookies.delete('session');
 		throw redirect(301, '/authorize');
