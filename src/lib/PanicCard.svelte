@@ -38,14 +38,10 @@
 </script>
 
 <div
-	class={`bg-slate-200 rounded p-4 my-2 hover:shadow-md transition-shadow ${
-		show ? 'shadow-md' : 'cursor-pointer'
-	}`}
-	on:click|self={() => (show ? null : (show = !show))}
-	on:keypress|self={() => (show ? null : (show = !show))}
+	class={`bg-slate-200 rounded my-2 hover:shadow-md transition-shadow ${show ? 'shadow-md' : ''}`}
 >
 	<div
-		class="flex flex-row justify-between cursor-pointer"
+		class="flex flex-row justify-between p-4 cursor-pointer"
 		on:click={() => (show = !show)}
 		on:keypress={() => (show = !show)}
 	>
@@ -63,8 +59,8 @@
 		</span>
 	</div>
 	{#if show}
-		<div class="bg-slate-500 w-full h-px my-2" />
-		<div class="cursor-auto inline">
+		<div class="bg-slate-500 h-px mx-4 mb-2" />
+		<div class="cursor-auto px-4 pb-4 sep">
 			<p class="inline">Triggers: <span class="font-semibold">{record.triggers}</span></p>
 			<br />
 			<p class="inline">
@@ -99,6 +95,43 @@
 			<p class="inline">Behaviors: <span class="font-semibold">{record.behaviors}</span></p>
 		</div>
 	{/if}
+	<noscript>
+		<div class="bg-slate-500 h-px mx-4 mb-2" />
+		<div class="cursor-auto px-4 pb-4 sep">
+			<p class="inline">Triggers: <span class="font-semibold">{record.triggers}</span></p>
+			<br />
+			<p class="inline">
+				This panic attack was
+				<span class="font-semibold">
+					{#if record.expected}
+						expected
+					{:else}
+						unexpected
+					{/if}
+				</span>
+			</p>
+			<br />
+			<div class="flex flex-row content-center gap-2">
+				<p class="inline whitespace-nowrap">Maximum fear:</p>
+				<div class="md:w-1/2 h-4 outline my-1 w-full">
+					<div class="bg-slate-700 h-4 bar-inner" style:width={`${10 * record.max_fear}%`} />
+				</div>
+				<span class="font-semibold">{record.max_fear}</span>
+			</div>
+			<p class="inline">Symptoms:</p>
+			<br />
+			<ul>
+				{#each allSymptoms as str}
+					<li class="font-semibold break-words list-disc list-inside">
+						{str}
+					</li>
+				{/each}
+			</ul>
+			<p class="inline">Thoughts: <span class="font-semibold">{record.thoughts}</span></p>
+			<br />
+			<p class="inline">Behaviors: <span class="font-semibold">{record.behaviors}</span></p>
+		</div>
+	</noscript>
 </div>
 
 <style>
@@ -110,5 +143,9 @@
 	.bar-inner {
 		animation-name: bar;
 		animation-duration: 2s;
+	}
+
+	.sep {
+		width: calc(100% - 1rem - 1rem);
 	}
 </style>
