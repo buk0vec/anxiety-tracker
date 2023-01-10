@@ -1,7 +1,6 @@
 import { prisma } from "$lib/server/prisma";
 import dayjs from "dayjs";
-import type { Actions, LayoutServerLoad } from "./$types";
-import { redirect } from "@sveltejs/kit";
+import type { LayoutServerLoad } from "./$types";
 
 export const load = (async ({ url }) => {
   if (url.pathname.includes("authorize")) {
@@ -52,10 +51,3 @@ export const load = (async ({ url }) => {
 		now: new Date()
 	};
 }) satisfies LayoutServerLoad;
-
-export const actions = {
-  logout: async ({ cookies }) => {
-		cookies.delete('session');
-		throw redirect(301, '/authorize');
-	}
-} satisfies Actions;

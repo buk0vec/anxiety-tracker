@@ -10,7 +10,7 @@
 			<a href="/">Home</a>
 			<a href="/history">History</a>
 			{#if $page.url.pathname != '/authorize'}
-				<form method="post" action="?/logout">
+				<form method="post" action="/?/logout">
 					<button>Logout</button>
 				</form>
 			{/if}
