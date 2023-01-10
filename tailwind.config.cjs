@@ -4,7 +4,8 @@ const config = {
 	theme: {
 		extend: {
       transitionProperty: {
-        'outline': 'outline'
+        'outline': 'outline',
+        'border': 'border'
       }
     }
 	},

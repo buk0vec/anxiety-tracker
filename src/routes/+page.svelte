@@ -48,8 +48,6 @@
 	<title>Anxiety Tracker</title>
 </svelte:head>
 
-<h1 class="text-3xl">Anxiety Record</h1>
-
 <section class="relative overflow-auto w-full lg:w-1/2 h-96">
 	<canvas id="chart" class="" bind:this={chart} />
 </section>
