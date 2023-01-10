@@ -1,11 +1,37 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import DailyCard from '$lib/DailyCard.svelte';
 	import PanicCard from '$lib/PanicCard.svelte';
+	import { Chart } from 'chart.js';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	let showDaily = false;
+	let chart: HTMLCanvasElement;
+
+	onMount(() => {
+		console.log(data.chartData);
+		if (browser) {
+			import('chart.js').then((cjs) => {
+				Chart.register(...cjs.registerables);
+				new cjs.Chart(chart, {
+					type: 'line',
+					data: data.chartData,
+					options: {
+						scales: {
+							yAxis: {
+								min: 0,
+								max: 10
+							}
+						},
+						maintainAspectRatio: false
+					}
+				});
+			});
+		}
+	});
 
 	$: showDaily = !data.daily.find(
 		(r) =>
@@ -23,6 +49,10 @@
 </svelte:head>
 
 <h1 class="text-3xl">Anxiety Record</h1>
+
+<section class="relative overflow-auto w-full lg:w-1/2 h-96">
+	<canvas id="chart" class="" bind:this={chart} />
+</section>
 
 <h2 class="text-xl mt-4">Daily Check-In</h2>
 {#if showDaily}

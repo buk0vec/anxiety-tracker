@@ -1,13 +1,47 @@
 import { prisma } from '$lib/server/prisma';
 import { redirect } from '@sveltejs/kit';
+import dayjs from 'dayjs';
 
 import type { PageServerLoad } from './$types';
 import type { Actions } from './$types';
 
 export const load = (async () => {
+	const panic = await prisma.panicRecord.findMany();
+	const daily = await prisma.dailyRecord.findMany();
+
+	const dailySorted = [...daily].sort((d1, d2) => d1.date.getTime() - d2.date.getTime());
+	const weeksElapsed = Math.ceil(
+		dailySorted.length > 0 ? dayjs(dailySorted[dailySorted.length - 1].date).diff(dayjs(dailySorted[0].date), 'weeks') : 0
+	);
+
+	const weekValues = dailySorted.map((d) =>
+		Math.floor(dayjs(d.date).diff(dayjs(dailySorted[0].date), 'weeks'))
+	);
+	const weekRange = [...Array(weeksElapsed + 1).keys()];
+	const averages = weekRange.map(
+		(v) =>
+			dailySorted
+				.filter((_, i) => weekValues[i] === v)
+				.reduce((prev, curr) => prev + curr.anxiety_level, 0) /
+			weekValues.filter((wv) => wv === v).length
+	);
+
+	const chartData = {
+		labels: weekRange,
+		datasets: [
+			{
+				label: 'Average anxiety',
+				data: averages,
+				borderColor: 'rgb(75, 192, 192)',
+				yAxisID: 'yAxis'
+			}
+		]
+	};
+
 	return {
-		panic: await prisma.panicRecord.findMany(),
-		daily: await prisma.dailyRecord.findMany(),
+		panic,
+		daily,
+    chartData,
 		now: new Date()
 	};
 }) satisfies PageServerLoad;
@@ -83,17 +117,17 @@ export const actions: Actions = {
 
 		return;
 	},
-  deletePanic: async ({ request }) => {
-    const fd = await request.formData();
-    // TODO: validate that this field exists.
-    const uid = fd.get('uid') as string;
-    await prisma.panicRecord.delete({
-      where: {
-        uid
-      }
-    })
-    return;
-  },
+	deletePanic: async ({ request }) => {
+		const fd = await request.formData();
+		// TODO: validate that this field exists.
+		const uid = fd.get('uid') as string;
+		await prisma.panicRecord.delete({
+			where: {
+				uid
+			}
+		});
+		return;
+	},
 	logout: async ({ cookies }) => {
 		cookies.delete('session');
 		throw redirect(301, '/authorize');
