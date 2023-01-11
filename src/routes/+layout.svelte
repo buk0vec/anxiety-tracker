@@ -4,6 +4,10 @@
 	import GithubLink from '$lib/GithubLink.svelte';
 </script>
 
+<svelte:head>
+	<title>Anxiety Tracker</title>
+</svelte:head>
+
 <div class="p-4 flex flex-col min-h-screen">
 	<header class="flex flex-row items-baseline gap-4 justify-between sm:pr-6">
 		<h1 class="text-3xl">Anxiety Record</h1>

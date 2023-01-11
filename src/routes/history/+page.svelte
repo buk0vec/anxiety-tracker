@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 	import DailyCard from '$lib/DailyCard.svelte';
 	import PanicCard from '$lib/PanicCard.svelte';
+	import { fade } from 'svelte/transition';
+
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -9,7 +11,7 @@
 	let showDaily = data.showDaily;
 </script>
 
-<div>
+<div in:fade>
 	<div class="md:hidden flex gap-4 pt-2">
 		<button
 			class={`text-lg transition-border ${
