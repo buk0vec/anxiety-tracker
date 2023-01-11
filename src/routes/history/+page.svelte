@@ -53,5 +53,28 @@
 				{/if}
 			</div>
 		</div>
+		<noscript>
+			<div class="md:hidden">
+				{#if showDaily}
+					<h3 class="text-lg">Panic Records</h3>
+					{#if $page.data.panic.length === 0}
+						<p>No entries.</p>
+					{:else}
+						{#each [...$page.data.panic].sort((a, b) => b.date.getTime() - a.date.getTime()) as record (record.uid)}
+							<PanicCard {record} />
+						{/each}
+					{/if}
+				{:else}
+					<h3 class="text-lg">Daily Records</h3>
+					{#if $page.data.daily.length === 0}
+						<p>No entries.</p>
+					{:else}
+						{#each [...$page.data.daily].sort((a, b) => b.date.getTime() - a.date.getTime()) as record (record.uid)}
+							<DailyCard {record} />
+						{/each}
+					{/if}
+				{/if}
+			</div>
+		</noscript>
 	</div>
 </div>

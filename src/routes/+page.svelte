@@ -48,6 +48,16 @@
 </svelte:head>
 
 <section class="relative overflow-auto w-full lg:w-1/2 h-96">
+	<noscript>
+		<div>
+			<h3 class="text-lg">Average anxiety per week:</h3>
+			<ol class="list-decimal" type="1">
+				{#each data.chartData.datasets[0].data as datum}
+					<li>{datum}</li>
+				{/each}
+			</ol>
+		</div>
+	</noscript>
 	<canvas id="chart" class="" bind:this={chart} />
 </section>
 
