@@ -106,24 +106,16 @@
 		{:else}
 			<p>You've already done your daily check-in!</p>
 			<button
-				class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
+				class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors w-full"
 				on:click={() => (showDaily = !showDaily)}>Show check-in form</button
 			>
 		{/if}
 	</section>
 </div>
-<h3 class="text-lg">Past panic attacks</h3>
-{#each [...data.panic].sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
-	<PanicCard {record} />
-{/each}
-<h3 class="text-lg">Past check-ins</h3>
-{#each [...data.daily].sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
+<div class="flex flex-row items-baseline gap-3 justify-between">
+	<h3 class="text-lg">Past check-ins</h3>
+	<a href="/history" class="text-lg underline underline-offset-2">View all</a>
+</div>
+{#each [...data.daily].slice(0, 5).sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
 	<DailyCard {record} />
 {/each}
-
-<form method="POST" action="?/logout">
-	<button
-		class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
-		>Logout</button
-	>
-</form>
