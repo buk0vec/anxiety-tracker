@@ -12,7 +12,6 @@
 	let chart: HTMLCanvasElement;
 
 	onMount(() => {
-		console.log(data.chartData);
 		if (browser) {
 			import('chart.js').then((cjs) => {
 				Chart.register(...cjs.registerables);
