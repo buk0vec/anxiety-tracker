@@ -115,7 +115,7 @@ export const actions: Actions = {
 			}
 		});
 
-		return;
+    throw redirect(302, '/history?showDaily=false');
 	},
 	deletePanic: async ({ request }) => {
 		const fd = await request.formData();
@@ -126,7 +126,7 @@ export const actions: Actions = {
 				uid
 			}
 		});
-		return;
+		throw redirect(302, '/history?showDaily=false');
 	},
 	logout: async ({ cookies }) => {
 		cookies.delete('session');

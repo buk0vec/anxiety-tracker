@@ -8,6 +8,7 @@
 		<h1 class="text-3xl">Anxiety Record</h1>
 		<div class="flex flex-row gap-4 content-end">
 			<a href="/">Home</a>
+			<a href="/report">Reporter</a>
 			<a href="/history">History</a>
 			{#if $page.url.pathname != '/authorize'}
 				<form method="post" action="/?/logout">
