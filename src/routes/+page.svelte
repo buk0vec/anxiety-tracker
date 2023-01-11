@@ -47,63 +47,75 @@
 	<title>Anxiety Tracker</title>
 </svelte:head>
 
-<section class="relative overflow-auto w-full lg:w-1/2 h-96">
-	<noscript>
-		<div>
-			<h3 class="text-lg">Average anxiety per week:</h3>
-			<ol class="list-decimal" type="1">
-				{#each data.chartData.datasets[0].data as datum}
-					<li>{datum}</li>
-				{/each}
-			</ol>
-		</div>
-	</noscript>
-	<canvas id="chart" class="" bind:this={chart} />
-</section>
+<div class="md:grid block md:grid-cols-2 gap-4">
+	<section class="relative overflow-auto w-full h-96">
+		<noscript>
+			<div>
+				<h3 class="text-lg">Average anxiety per week:</h3>
+				<ol class="list-decimal" type="1">
+					{#each data.chartData.datasets[0].data as datum}
+						<li>{datum}</li>
+					{/each}
+				</ol>
+			</div>
+		</noscript>
+		<canvas id="chart" class="" bind:this={chart} />
+	</section>
+	<section>
+		<h2 class="text-xl mt-4">Daily Check-In</h2>
+		{#if showDaily}
+			<form method="POST" action="?/createDaily" class="flex flex-col">
+				<label for="daily_date">Date</label>
+				<input
+					type="date"
+					name="date"
+					id="daily_date"
+					value={`${data.now.getFullYear()}-${data.now.getMonth() < 9 ? '0' : ''}${
+						data.now.getMonth() + 1
+					}-${data.now.getDate() < 10 ? '0' : ''}${data.now.getDate()}`}
+					required
+				/>
 
-<h2 class="text-xl mt-4">Daily Check-In</h2>
-{#if showDaily}
-	<form method="POST" action="?/createDaily" class="flex flex-col">
-		<label for="daily_date">Date</label>
-		<input
-			type="date"
-			name="date"
-			id="daily_date"
-			value={`${data.now.getFullYear()}-${data.now.getMonth() < 9 ? '0' : ''}${
-				data.now.getMonth() + 1
-			}-${data.now.getDate() < 10 ? '0' : ''}${data.now.getDate()}`}
-			required
-		/>
+				<label for="daily_anxiety"> Average Anxiety </label>
+				<input
+					type="number"
+					min="0"
+					max="10"
+					name="anxiety"
+					value="0"
+					id="daily_anxiety"
+					required
+				/>
 
-		<label for="daily_anxiety"> Average Anxiety </label>
-		<input type="number" min="0" max="10" name="anxiety" value="0" id="daily_anxiety" required />
+				<label for="daily_depression"> Average Depression </label>
+				<input
+					type="number"
+					min="0"
+					max="10"
+					name="depression"
+					value="0"
+					id="daily_depression"
+					required
+				/>
 
-		<label for="daily_depression"> Average Depression </label>
-		<input
-			type="number"
-			min="0"
-			max="10"
-			name="depression"
-			value="0"
-			id="daily_depression"
-			required
-		/>
+				<label for="daily_worry"> Average Worry About Panic </label>
+				<input type="number" min="0" max="10" name="worry" value="0" id="daily_worry" required />
 
-		<label for="daily_worry"> Average Worry About Panic </label>
-		<input type="number" min="0" max="10" name="worry" value="0" id="daily_worry" required />
+				<button
+					class="bg-slate-100 rounded my-4 p-2 border-solid border-2 border-purple-400 hover:bg-purple-400 transition-colors"
+					>Submit</button
+				>
+			</form>
+		{:else}
+			<p>You've already done your daily check-in!</p>
+			<button
+				class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
+				on:click={() => (showDaily = !showDaily)}>Show check-in form</button
+			>
+		{/if}
+	</section>
+</div>
 
-		<button
-			class="bg-slate-100 rounded my-4 p-2 border-solid border-2 border-purple-400 hover:bg-purple-400 transition-colors"
-			>Submit</button
-		>
-	</form>
-{:else}
-	<p>You've already done your daily check-in!</p>
-	<button
-		class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
-		on:click={() => (showDaily = !showDaily)}>Show check-in form</button
-	>
-{/if}
 <h2 class="text-xl mt-4">Panic Attack Reporting</h2>
 <button
 	class="bg-slate-100 p-2 rounded border-2 border-purple-400 hover:bg-purple-400 transition-colors"
