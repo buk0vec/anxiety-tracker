@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import type { PageLoad } from './history/$types';
 
 export const load = (async ({ parent }) => {
-  const { daily, panic } = await parent();
+  const { daily } = await parent();
 
 	const dailySorted = [...daily].sort((d1, d2) => d1.date.getTime() - d2.date.getTime());
 	const weeksElapsed = Math.ceil(
@@ -35,8 +35,6 @@ export const load = (async ({ parent }) => {
 	};
 
 	return {
-		panic,
-		daily,
     chartData,
 		now: new Date()
 	};

@@ -113,7 +113,7 @@
 		<h3 class="text-lg">Past check-ins</h3>
 		<a href="/history" class="text-lg underline underline-offset-2">View all</a>
 	</div>
-	{#each [...data.daily].slice(0, 5).sort((a, b) => b.date.getTime() - a.date.getTime()) as record}
+	{#each [...data.daily].sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 5) as record}
 		<DailyCard {record} />
 	{/each}
 </div>
