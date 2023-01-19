@@ -4,7 +4,7 @@
 
 ## Why?
 
-Because I have anxiety and I sometimes have panic attacks. The goal of this web application is to provide objective daily anxiety and panic attack reporting as described in [Mastery of Your Anxiety and Panic](https://www.amazon.com/Mastery-Your-Anxiety-Panic-Treatments/dp/0195311353).
+The goal of this web application is to provide objective daily anxiety and panic attack reporting as described in [Mastery of Your Anxiety and Panic](https://www.amazon.com/Mastery-Your-Anxiety-Panic-Treatments/dp/0195311353).
 
 ## Features
 
